@@ -15,17 +15,26 @@ const todoSlice=createSlice(
                  state.push(action.payload)
 
             },
-            complited:(state,action)=>{
+            completed:(state,action)=>{
                 const task=state.find(task=>task.id===action.payload)
             if(task){
-                task.isDone=true
+                task.isDone=!task.isDone
             }    
+            },
+            editTask:(state,action)=>{
+                const task=state.find(task=>task.id===action.payload.id)
+                if(task){
+                    task.description=action.payload.newDescription
+                    task.isDone=false
+                }
+
             }
+
             
         }
 
     }
 
 );
-export const {newTask,complited}= todoSlice.actions;
+export const {newTask,completed,editTask}= todoSlice.actions;
 export default todoSlice.reducer;
